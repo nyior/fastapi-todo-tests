@@ -1,0 +1,34 @@
+version: v1.0
+name: Semaphore FastAPI CI Example Pipeline
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+global_job_config:
+  prologue:
+    commands:
+      - sem-version python 3.8
+blocks:
+  - name: Install Dependencies
+    task:
+      prologue:
+        commands:
+          - sudo apt-get update && sudo apt-get install -y python3-dev && sudo apt-get install default-libmysqlclient-dev
+      jobs:
+        - name: pip
+          commands:
+            - checkout
+            - cache restore
+            - pip download --cache-dir .pip_cache -r requirements.txt
+            - cache store
+  - name: Run Unit Tests
+    task:
+      prologue:
+        commands:
+          - checkout
+          - cache restore
+          - pip install -r requirements.txt --cache-dir .pip_cache
+      jobs:
+        - name: Test routes
+          commands:
+            - pytest
