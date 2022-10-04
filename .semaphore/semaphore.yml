@@ -32,3 +32,8 @@ blocks:
         - name: Test routes
           commands:
             - pytest
+promotions:
+  - name: Elastic Beanstalk Deployment
+    pipeline_file: semaphore_cd.yml
+    auto_promote:
+      when: "result = 'passed' and branch = 'main'"
