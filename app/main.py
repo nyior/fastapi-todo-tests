@@ -44,3 +44,8 @@ def tasks():
     ]
 
     return tasks
+
+
+@app.get("/")
+def home():
+    return "Welcome to our TODO application. Add /docs to the current URL to visit our docs page"

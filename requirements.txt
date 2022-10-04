@@ -1,4 +1,4 @@
 fastapi==0.75.0
-uvicorn==0.17.6
+uvicorn[standard]
 pytest
 requests
